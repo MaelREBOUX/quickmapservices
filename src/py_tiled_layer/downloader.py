@@ -113,7 +113,7 @@ class Downloader(QObject):
             if self.errorStatus == self.NO_ERROR:
                 self.errorStatus = self.UNKNOWN_ERROR
 
-        self.emit(SIGNAL('replyFinished(QString, int, int)'), url, reply.error(), isFromCache)
+        self.replyFinished.emit(url, reply.error(), isFromCache)
         reply.deleteLater()
 
         if debug_mode:
