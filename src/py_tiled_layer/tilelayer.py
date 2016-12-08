@@ -23,7 +23,7 @@ from __future__ import absolute_import
 # Import the PyQt and QGIS libraries
 import os
 import threading
-from qgis.PyQt.QtCore import QObject, qDebug, Qt, QFile, QRectF, QPointF, QPoint, QTimer, QEventLoop
+from qgis.PyQt.QtCore import QObject, qDebug, Qt, QFile, QRectF, QPointF, QPoint, QTimer, QEventLoop, pyqtSignal
 
 from qgis.PyQt.QtGui import QFont, QColor, QBrush
 from qgis.core import QgsPluginLayer, QgsCoordinateReferenceSystem, QgsPluginLayerType, QgsImageOperation
@@ -57,6 +57,11 @@ class LayerDefaultSettings(object):
 
 
 class TileLayer(QgsPluginLayer):
+
+    fetchRequestSignal = pyqtSignal(list)
+    showMessageSignal = pyqtSignal(unicode, int)
+    showBarMessageSignal = pyqtSignal(unicode, unicode, int, int)
+    allRepliesFinishedSignal = pyqtSignal()
 
     CRS_3857 = QgsCoordinateReferenceSystem(3857)
 
@@ -156,17 +161,17 @@ class TileLayer(QgsPluginLayer):
         self.downloader.userAgent = QGISSettings.get_default_user_agent()
         self.downloader.default_cache_expiration = QGISSettings.get_default_tile_expiry()
         self.downloader.max_connection = PluginSettings.default_tile_layer_conn_count()  #TODO: Move to INI files
-        self.downloader.replyFinished.connect(self.networkReplyFinished)
+        self.downloader.downloadFinished.connect(self.networkReplyFinished)
 
         #network
         self.downloadTimeout = QGISSettings.get_default_network_timeout()
 
         # multi-thread rendering
         self.eventLoop = None
-        self.fetchRequest.connect(self.fetchRequest)
+        self.fetchRequestSignal.connect(self.fetchRequest)
         if self.iface:
-            self.showMessage.connect(self.showStatusMessageSlot)
-            self.showBarMessage.connect(self.showBarMessageSlot)
+            self.showMessageSignal.connect(self.showStatusMessageSlot)
+            self.showBarMessageSignal.connect(self.showBarMessageSlot)
 
     def setBlendModeByName(self, modeName):
         self.blendModeName = modeName
@@ -601,7 +606,7 @@ class TileLayer(QgsPluginLayer):
             return
         unfinishedCount = self.downloader.unfinishedCount()
         if unfinishedCount == 0:
-            self.allRepliesFinished.emit()
+            self.allRepliesFinishedSignal.emit()
 
         downloadedCount = self.downloader.fetchSuccesses - self.downloader.cacheHits
         totalCount = self.downloader.finishedCount() + unfinishedCount
@@ -680,14 +685,14 @@ class TileLayer(QgsPluginLayer):
         # create a QEventLoop object that belongs to the current thread (if ver. > 2.1, it is render thread)
         eventLoop = QEventLoop()
         self.logT("Create event loop: " + str(eventLoop))  # DEBUG
-        self.allRepliesFinished.connect(eventLoop.quit)
+        self.allRepliesFinishedSignal.connect(eventLoop.quit)
 
         # create a timer to watch whether rendering is stopped
         watchTimer = QTimer()
         watchTimer.timeout.connect(eventLoop.quit)
 
         # send a fetch request to the main thread
-        self.fetchRequest.emit(urls)
+        self.fetchRequestSignal.emit(urls)
 
         # wait for the fetch to finish
         tick = 0
@@ -715,7 +720,7 @@ class TileLayer(QgsPluginLayer):
         files = self.downloader.fetchedFiles
 
         watchTimer.timeout.disconnect(eventLoop.quit)  #
-        self.allRepliesFinished.disconnect(eventLoop.quit)
+        self.allRepliesFinishedSignal.disconnect(eventLoop.quit)
 
         self.logT("TileLayer.fetchFiles() ends")
         return files
@@ -725,7 +730,7 @@ class TileLayer(QgsPluginLayer):
         self.downloader.fetchFilesAsync(urls, self.downloadTimeout)
 
     def showStatusMessage(self, msg, timeout=0):
-        self.showMessage.emit(msg, timeout)
+        self.showMessageSignal.emit(msg, timeout)
 
     def showStatusMessageSlot(self, msg, timeout):
         self.iface.mainWindow().statusBar().showMessage(msg, timeout)
@@ -734,7 +739,7 @@ class TileLayer(QgsPluginLayer):
         if PluginSettings.show_messages_in_bar():
             if title is None:
                 title = PluginSettings.product_name()
-            self.showBarMessage.emit(title, text, level, duration)
+            self.showBarMessageSignal.emit(title, text, level, duration)
 
     def showBarMessageSlot(self, title, text, level, duration):
         self.iface.messageBar().pushMessage(title, text, level, duration)
