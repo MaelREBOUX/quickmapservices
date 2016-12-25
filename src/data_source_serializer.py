@@ -1,13 +1,13 @@
 from __future__ import absolute_import
 import codecs
 import os
-from ConfigParser import ConfigParser
 from .config_reader_helper import ConfigReaderHelper
 from .custom_translator import CustomTranslator
 from .data_source_info import DataSourceInfo
 from .fixed_config_parser import FixedConfigParser
 from .locale import Locale
 from .supported_drivers import KNOWN_DRIVERS
+from .compat import configparser
 
 
 class DataSourceSerializer(object):
@@ -20,7 +20,7 @@ class DataSourceSerializer(object):
         dir_path = os.path.abspath(os.path.join(ini_file_path, os.path.pardir))
         ini_file = codecs.open(ini_file_path, 'r', 'utf-8')
 
-        parser = ConfigParser()
+        parser = configparser.ConfigParser()
         parser.readfp(ini_file)
 
         ds = DataSourceInfo()

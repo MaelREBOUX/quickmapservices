@@ -20,12 +20,13 @@
  *                                                                         *
  ***************************************************************************/
 """
-import ConfigParser
 import os
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
 from qgis.PyQt.QtGui import QPixmap
+
+from .compat import configparser
 
 
 CURR_PATH = os.path.dirname(__file__)
@@ -43,7 +44,7 @@ class AboutDialog(QDialog, FORM_CLASS):
 
         self.lblLogo.setPixmap(QPixmap(os.path.join(CURR_PATH, 'icons/mapservices.png')))
 
-        cfg = ConfigParser.SafeConfigParser()
+        cfg = configparser.SafeConfigParser()
         cfg.read(os.path.join(os.path.dirname(__file__), 'metadata.txt'))
         version = cfg.get('general', 'version')
 
