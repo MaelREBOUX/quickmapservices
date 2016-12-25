@@ -23,9 +23,9 @@ from __future__ import absolute_import
 # Import the PyQt and QGIS libraries
 import os
 import threading
-from PyQt4.QtCore import QObject, qDebug, Qt, QFile, QRectF, QPointF, QPoint, QTimer, QEventLoop
-from PyQt4.QtCore import SIGNAL
-from PyQt4.QtGui import QFont, QColor, QBrush
+from qgis.PyQt.QtCore import QObject, qDebug, Qt, QFile, QRectF, QPointF, QPoint, QTimer, QEventLoop
+
+from qgis.PyQt.QtGui import QFont, QColor, QBrush
 from qgis.core import QgsPluginLayer, QgsCoordinateReferenceSystem, QgsPluginLayerType, QgsImageOperation
 from qgis.gui import QgsMessageBar
 from qgis.utils import iface

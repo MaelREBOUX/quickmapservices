@@ -3,29 +3,32 @@ from urllib2 import URLError
 from os import path
 import ast
 
-from PyQt4 import uic
-from PyQt4.QtGui import (
+from qgis.PyQt import uic
+from qgis.PyQt.QtGui import (
+    QImage,
+    QPixmap,
+    QCursor,
+)
+
+from qgis.PyQt.QtWidgets import (
     QApplication,
     QWidget,
     QDockWidget,
     QHBoxLayout,
     QLabel,
-    QImage,
-    QPixmap,
     QToolButton,
-    QCursor,
     QSizePolicy,
     QListWidgetItem,
 )
 
-from PyQt4.QtCore import (
+from qgis.PyQt.QtCore import (
     QThread,
     pyqtSignal,
     Qt,
     QTimer,
     QMutex,
     QSize,
-    QByteArray
+    QByteArray,
 )
 
 from qgis.gui import QgsFilterLineEdit
@@ -83,7 +86,7 @@ class CachedServices(object):
     def __init__(self):
         self.geoservices = []
         self.load_last_used_services()
-    
+
     def load_last_used_services(self):
         for geoservice, image_ba in PluginSettings.get_last_used_services():
             geoservice = Geoservice( geoservice, image_ba)
@@ -357,7 +360,7 @@ class SearchThread(QThread):
                 ba = QByteArray()
 
                 icon_id = result.get("icon")
-                
+
                 if not self.img_cach.has_key(icon_id):
                     if icon_id:
                         ba = QByteArray(self.searcher.get_icon_content(icon_id, 24, 24))

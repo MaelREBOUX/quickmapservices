@@ -25,8 +25,9 @@ from ConfigParser import ConfigParser
 import codecs
 import os
 import sys
-from PyQt4.QtCore import QCoreApplication
-from PyQt4.QtGui import QIcon, QAction
+from qgis.PyQt.QtCore import QCoreApplication
+from qgis.PyQt.QtGui import QIcon
+from qgis.PyQt.QtWidgets import QAction
 from qgis.core import QgsMessageLog
 from .config_reader_helper import ConfigReaderHelper
 from .custom_translator import CustomTranslator

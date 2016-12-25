@@ -28,8 +28,8 @@ import urllib2
 from zipfile import ZipFile
 import shutil
 
-from PyQt4.QtCore import QUrl, QEventLoop, QFile, QIODevice
-from PyQt4.QtNetwork import QNetworkRequest, QNetworkReply
+from qgis.PyQt.QtCore import QUrl, QEventLoop, QFile, QIODevice
+from qgis.PyQt.QtNetwork import QNetworkRequest, QNetworkReply
 from qgis.core import QgsApplication, QgsNetworkAccessManager
 
 from .plugin_settings import PluginSettings

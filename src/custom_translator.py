@@ -21,7 +21,7 @@
  ***************************************************************************/
 """
 from __future__ import absolute_import
-from PyQt4.QtCore import QTranslator
+from qgis.PyQt.QtCore import QTranslator
 from .singleton import singleton
 
 

@@ -23,8 +23,9 @@
 import ConfigParser
 import os
 
-from PyQt4 import uic
-from PyQt4.QtGui import QDialog, QDialogButtonBox, QPixmap
+from qgis.PyQt import uic
+from qgis.PyQt.QtWidgets import QDialog, QDialogButtonBox
+from qgis.PyQt.QtGui import QPixmap
 
 
 CURR_PATH = os.path.dirname(__file__)

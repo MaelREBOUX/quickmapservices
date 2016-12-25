@@ -3,9 +3,10 @@ import os
 import shutil
 
 import sys
-from PyQt4 import uic
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QGroupBox, QListWidgetItem, QDialog, QMessageBox, QIcon, QVBoxLayout, QTreeView, QHeaderView
+from qgis.PyQt import uic
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtWidgets import QGroupBox, QListWidgetItem, QDialog, QMessageBox, QVBoxLayout, QTreeView, QHeaderView
+from qgis.PyQt.QtGui import QIcon
 
 from .data_sources_list import DataSourcesList, USER_DS_PATHS
 from .ds_edit_dialog import DsEditDialog

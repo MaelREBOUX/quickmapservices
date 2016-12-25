@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import ast
 import urlparse
 
-from PyQt4.QtCore import QCoreApplication
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.core import QgsRasterLayer, QgsVectorLayer, QgsMessageLog, QgsMapLayerRegistry, QgsProject
 from qgis.gui import QgsMessageBar
 from qgis.utils import iface

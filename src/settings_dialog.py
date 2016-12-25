@@ -24,9 +24,10 @@ from __future__ import absolute_import
 
 import os
 
-from PyQt4 import uic
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QMessageBox, QCursor, QDialog, QIcon
+from qgis.PyQt import uic
+from qgis.PyQt.QtCore import Qt
+from qgis.PyQt.QtWidgets import QMessageBox, QDialog
+from qgis.PyQt.QtGui import QCursor, QIcon
 import sys
 from qgis.core import QgsApplication
 from .extra_sources import ExtraSources

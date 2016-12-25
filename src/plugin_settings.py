@@ -21,8 +21,7 @@
  ***************************************************************************/
 """
 import ast
-
-from PyQt4.QtCore import QSettings, QDir, Qt, QByteArray
+from qgis.PyQt.QtCore import QSettings, QDir, Qt, QByteArray
 
 import extra_sources
 
