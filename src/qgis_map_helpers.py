@@ -1,12 +1,12 @@
 from __future__ import absolute_import
 import ast
-import urlparse
 
 from qgis.PyQt.QtCore import QCoreApplication
-from qgis.core import QgsRasterLayer, QgsVectorLayer, QgsMessageLog, QgsMapLayerRegistry, QgsProject
+from qgis.core import QgsRasterLayer, QgsVectorLayer, QgsMessageLog, QgsProject
 from qgis.gui import QgsMessageBar
 from qgis.utils import iface
 
+from .compat import urlparse
 from .plugin_settings import PluginSettings
 from .supported_drivers import KNOWN_DRIVERS
 from .py_tiled_layer.tiles import TileServiceInfo
@@ -127,7 +127,7 @@ def add_layer_to_map(ds):
                 position = len(toc_root.children())  # Insert to bottom if wms\tms
             else:
                 position = 0  # insert to top
-            QgsMapLayerRegistry.instance().addMapLayer(layer, False)
+            QgsProject.instance().addMapLayer(layer, False)
             toc_root.insertLayer(position, layer)
 
             # Save link

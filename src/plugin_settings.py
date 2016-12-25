@@ -23,7 +23,7 @@
 import ast
 from qgis.PyQt.QtCore import QSettings, QDir, Qt, QByteArray
 
-import extra_sources
+from . import extra_sources
 
 class PluginSettings(object):
 
