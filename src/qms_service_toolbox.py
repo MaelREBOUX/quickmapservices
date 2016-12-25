@@ -35,7 +35,7 @@ from qgis.core import (
     QgsMessageLog,
 )
 
-from ..compat import URLError
+from .compat import URLError
 from .data_source_serializer import DataSourceSerializer
 from .qgis_map_helpers import add_layer_to_map
 from .qms_external_api_python.client import Client
