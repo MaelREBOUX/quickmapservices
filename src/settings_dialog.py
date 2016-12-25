@@ -26,7 +26,7 @@ import os
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtWidgets import QMessageBox, QDialog
+from qgis.PyQt.QtWidgets import QMessageBox, QDialog, QHeaderView
 from qgis.PyQt.QtGui import QCursor, QIcon
 import sys
 from qgis.core import QgsApplication
