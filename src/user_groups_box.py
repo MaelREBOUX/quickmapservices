@@ -15,7 +15,14 @@ from .data_sources_model import DSManagerModel
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'user_groups_box.ui'))
 
-plugin_dir = os.path.dirname(__file__).decode(sys.getfilesystemencoding())
+
+encoding = sys.getfilesystemencoding()
+try:
+    filename = unicode(__file__, encoding)
+except TypeError:
+    filename = __file__
+plugin_dir = os.path.dirname(filename)
+
 
 class UserGroupsBox(QGroupBox, FORM_CLASS):
 

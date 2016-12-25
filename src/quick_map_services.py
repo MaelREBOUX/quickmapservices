@@ -61,7 +61,13 @@ class QuickMapServices(object):
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
-        self.plugin_dir = os.path.dirname(__file__).decode(sys.getfilesystemencoding())
+
+        encoding = sys.getfilesystemencoding()
+        try:
+            filename = unicode(__file__, encoding)
+        except TypeError:
+            filename = __file__
+        self.plugin_dir = os.path.dirname(filename)
 
         # initialize locale
         self.translator = QTranslator()

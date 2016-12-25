@@ -36,7 +36,13 @@ from .data_source_serializer import DataSourceSerializer
 from .locale import Locale
 from .supported_drivers import KNOWN_DRIVERS
 
-CURR_PATH = os.path.dirname(__file__).decode(sys.getfilesystemencoding())
+
+encoding = sys.getfilesystemencoding()
+try:
+    filename = unicode(__file__, encoding)
+except TypeError:
+    filename = __file__
+CURR_PATH = os.path.dirname(filename)
 
 INTERNAL_DS_PATHS = [os.path.join(CURR_PATH, extra_sources.DATA_SOURCES_DIR_NAME), ]
 CONTRIBUTE_DS_PATHS = [os.path.join(extra_sources.CONTRIBUTE_DIR_PATH, extra_sources.DATA_SOURCES_DIR_NAME), ]
